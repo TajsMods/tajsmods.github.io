@@ -1,3 +1,7 @@
+---
+title: Taj's Core API
+---
+
 # Taj's Core API
 
 All APIs are accessed from the Core singleton:

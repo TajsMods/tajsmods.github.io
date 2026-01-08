@@ -3,7 +3,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import WhatsNewBanner from "../components/WhatsNewBanner.astro";
 import TrustBar from "../components/TrustBar.astro";
-import VideoSection from "../components/VideoSection.astro";
+import FeaturedMods from "../components/FeaturedMods.astro";
+import Highlights from "../components/Highlights.astro";
+import QuickActions from "../components/QuickActions.astro";
 import FeatureGrid from "../components/FeatureGrid.astro";
 import GettingStarted from "../components/GettingStarted.astro";
 import FAQAccordion from "../components/FAQAccordion.astro";
@@ -14,6 +16,12 @@ import { faq } from "../data/faq";
 const previewFAQ = faq.slice(0, 4);
 
 const hubLinks = [
+  {
+    title: "All Mods",
+    description: "Browse the full collection of mods",
+    href: `${import.meta.env.BASE_URL}/mods/`,
+    icon: "📦",
+  },
   {
     title: "Documentation",
     description: "In-depth guides and reference for all mod features",
@@ -37,12 +45,6 @@ const hubLinks = [
     description: "See what's new in each version",
     href: `${import.meta.env.BASE_URL}/changelog/`,
     icon: "📋",
-  },
-  {
-    title: "Roadmap",
-    description: "Upcoming features and planned improvements",
-    href: `${import.meta.env.BASE_URL}/roadmap/`,
-    icon: "🗺️",
   },
   {
     title: "Support",
@@ -87,8 +89,14 @@ const externalLinks = [
   <!-- Trust Bar -->
   <TrustBar />
 
-  <!-- Video Section -->
-  <VideoSection />
+  <!-- Featured Mods -->
+  <FeaturedMods />
+
+  <!-- Why Use These Mods -->
+  <Highlights />
+
+  <!-- Quick Actions -->
+  <QuickActions />
 
   <!-- Feature Highlights -->
   <FeatureGrid />
@@ -102,7 +110,7 @@ const externalLinks = [
       <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-bold mb-4">Explore the Hub</h2>
         <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Everything you need to know about Taj's Mod in one place
+          Everything you need to know about Taj's Mods in one place
         </p>
       </div>
 

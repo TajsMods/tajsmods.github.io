@@ -37,7 +37,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     starlight({
-      title: "Taj's Mod",
+      title: "Taj's Mods",
       // Serve Starlight docs under /docs prefix
       // Note: Starlight content is in src/content/docs/
       social: [

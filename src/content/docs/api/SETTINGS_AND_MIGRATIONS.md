@@ -1,3 +1,7 @@
+---
+title: Settings and Migrations
+---
+
 # Settings and Migrations
 
 ## Settings Schema

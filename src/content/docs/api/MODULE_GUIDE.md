@@ -1,3 +1,7 @@
+---
+title: Module Guide
+---
+
 # Module Guide
 
 ## Best Practices

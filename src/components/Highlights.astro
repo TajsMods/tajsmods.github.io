@@ -1,0 +1,60 @@
+---
+/**
+ * Highlights component - explains the benefits of using Taj's Mods
+ */
+
+const highlights = [
+  {
+    title: 'Quality of Life',
+    description: 'Streamline your workflow with smart features that save time and reduce friction.',
+    icon: '✨',
+    examples: ['Command Palette', 'Quick Navigation', 'Smart Screenshots'],
+  },
+  {
+    title: 'Visual Enhancements',
+    description: 'Customize the look and feel of your game with flexible visual options.',
+    icon: '🎨',
+    examples: ['Custom Wire Colors', 'Group Patterns', 'UI Opacity Control'],
+  },
+  {
+    title: 'Powerful Tools',
+    description: 'Access advanced tools that make complex tasks simple and intuitive.',
+    icon: '🔧',
+    examples: ['Wire Drop Menu', 'Sticky Notes', 'The Bin'],
+  },
+  {
+    title: 'Non-Invasive',
+    description: "Enhance without overwhelming. All features are optional and don't change core gameplay.",
+    icon: '🎯',
+    examples: ['Opt-in Features', 'Per-Setting Control', 'Easy Reset'],
+  },
+];
+---
+
+<section class="section bg-white dark:bg-dark-900">
+  <div class="container-wide">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Use Taj's Mods?</h2>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Built with care to enhance your experience without changing what makes the game great
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {highlights.map(item => (
+        <div class="card p-6 text-center">
+          <span class="text-4xl mb-4 block">{item.icon}</span>
+          <h3 class="text-xl font-bold mb-3">{item.title}</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+            {item.description}
+          </p>
+          <div class="flex flex-wrap justify-center gap-2">
+            {item.examples.map(example => (
+              <span class="chip text-xs">{example}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -14,7 +14,7 @@ interface Props {
 
 const {
   title,
-  description = "A growing collection of Utility / QoL + Visual Tweaks for Upload Labs, without overhauling the core gameplay loop.",
+  description = "Your hub for Upload Labs mods. Quality-of-life enhancements, visual tweaks, and powerful tools.",
   image = `${import.meta.env.BASE_URL}/brand/TajsModHeader.png`,
 } = Astro.props;
 
@@ -35,27 +35,27 @@ const socialImageURL = new URL(image, Astro.site);
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO -->
-    <title>{title} | Taj's Mod</title>
+    <title>{title} | Taj's Mods</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="Taj's Mod Changelog"
+      title="Taj's Mods Changelog"
       href={`${import.meta.env.BASE_URL}/feed.xml`}
     />
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={`${title} | Taj's Mod`} />
+    <meta property="og:title" content={`${title} | Taj's Mods`} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={`${title} | Taj's Mod`} />
+    <meta property="twitter:title" content={`${title} | Taj's Mods`} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 

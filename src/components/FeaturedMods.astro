@@ -1,0 +1,44 @@
+---
+/**
+ * FeaturedMods component - displays featured mods on the homepage
+ */
+import { getFeaturedMods } from '../data/mods';
+import ModCard from './ModCard.astro';
+
+const featuredMods = getFeaturedMods();
+---
+
+<section class="section bg-white dark:bg-dark-900">
+  <div class="container-wide">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Featured Mods</h2>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Quality-tested mods that enhance your Upload Labs experience
+      </p>
+    </div>
+
+    {featuredMods.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredMods.map(mod => (
+          <ModCard mod={mod} variant="featured" />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12 text-gray-500 dark:text-gray-400">
+        <p>No featured mods available yet. Check back soon!</p>
+      </div>
+    )}
+
+    <div class="text-center mt-10">
+      <a 
+        href={`${import.meta.env.BASE_URL}/mods/`}
+        class="btn-secondary inline-flex items-center gap-2"
+      >
+        Browse All Mods
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
