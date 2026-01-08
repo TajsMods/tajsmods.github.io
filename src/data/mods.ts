@@ -43,7 +43,11 @@ export const statusConfig = {
   wip: { label: 'Work in Progress', color: 'orange', bgClass: 'bg-orange-500/10 text-orange-600 dark:text-orange-400' },
 } as const;
 
-// Tag categories for filtering
+/**
+ * Tag categories for filtering and display
+ * Can be used to add icons/colors to tag chips in the UI
+ * Future enhancement: Use these in ModCard and filter UI for visual consistency
+ */
 export const tagCategories = {
   'QoL': { icon: '✨', color: 'blue' },
   'UI': { icon: '🎨', color: 'purple' },

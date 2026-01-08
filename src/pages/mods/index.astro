@@ -113,6 +113,10 @@ const allTags = getAllTags();
 
 <script>
   function initModsFilter() {
+    // Prevent duplicate initialization
+    if ((window as any).__modsFilterInitialized) return;
+    (window as any).__modsFilterInitialized = true;
+
     const searchInput = document.getElementById('mod-search') as HTMLInputElement;
     const sortSelect = document.getElementById('mod-sort') as HTMLSelectElement;
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -121,8 +125,18 @@ const allTags = getAllTags();
     const modCount = document.getElementById('mod-count');
     const clearFiltersBtn = document.getElementById('clear-filters');
 
-    let currentFilter = 'all';
+    // Parse URL parameters for initial filter
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialFilter = urlParams.get('filter') || 'all';
+    
+    let currentFilter = initialFilter;
     let currentSearch = '';
+
+    // Apply initial filter button state
+    filterBtns.forEach(btn => {
+      const filterValue = btn.getAttribute('data-filter') || 'all';
+      btn.className = filterValue === currentFilter ? 'filter-btn chip-active' : 'filter-btn chip';
+    });
 
     function filterAndSort() {
       if (!modsGrid) return;
@@ -222,6 +236,11 @@ const allTags = getAllTags();
     // Initial sort
     filterAndSort();
   }
+
+  // Reset flag on page navigation for View Transitions
+  document.addEventListener('astro:before-swap', () => {
+    (window as any).__modsFilterInitialized = false;
+  });
 
   // Initialize on page load and navigation
   document.addEventListener('astro:page-load', initModsFilter);
