@@ -6,8 +6,8 @@ import sitemap from '@astrojs/sitemap';
 import astroMermaid from 'astro-mermaid';
 
 export default defineConfig({
-  site: 'https://TajemnikTV.github.io',
-  base: '/TajsMod',
+  site: 'https://tajsmods.github.io',
+  base: '/',
   // Ensure consistent trailing slashes for all URLs
   trailingSlash: 'always',
   // Build options for GitHub Pages compatibility
@@ -41,7 +41,7 @@ export default defineConfig({
       // Serve Starlight docs under /docs prefix
       // Note: Starlight content is in src/content/docs/
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/TajemnikTV/TajsMod' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/tajsmods' },
       ],
       // Disable default Starlight homepage since we have custom index
       disable404Route: true,
