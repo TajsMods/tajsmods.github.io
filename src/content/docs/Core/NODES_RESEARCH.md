@@ -1,4 +1,6 @@
-# Nodes/Windows Research (Vanilla)
+---
+title: Nodes/Windows Research (Vanilla)
+---
 
 - Registry source: `data/windows.json` defines the canonical window id keys and metadata (name, icon, description, scene, category, sub_category, level, requirement, hidden, attributes, data, guide).
 - Data load: `scripts/data.gd` loads `data/windows.json` into `Data.windows` during `_init`.

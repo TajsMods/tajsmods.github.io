@@ -1,4 +1,6 @@
-# Node API (Core)
+---
+title: Node API (Core)
+---
 
 Core exposes a node/window registry and a safe spawner that mirror the vanilla window pipeline.
 
