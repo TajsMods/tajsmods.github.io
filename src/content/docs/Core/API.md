@@ -167,6 +167,25 @@ core.keybinds.set_binding("yourmod.toggle", [new_event])
 core.keybinds.reset_to_default("yourmod.toggle")
 ```
 
+## Convenience Helpers
+
+```gdscript
+core.notify("check", "Operation complete")
+core.play_sound("click")
+core.copy_to_clipboard("https://example.com")
+```
+
+## Command Palette Settings
+
+Palette state/config is available when the Command Palette mod is installed:
+
+```gdscript
+if core.command_palette != null:
+    core.command_palette.set_enabled(true)
+    core.command_palette.set_value("wire_drop_menu_enabled", true)
+    var favorites = core.command_palette.get_favorites()
+```
+
 ## Patches
 
 Apply one-time patches and signal connections:
