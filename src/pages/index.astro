@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
-import WhatsNewBanner from "../components/WhatsNewBanner.astro";
 import TrustBar from "../components/TrustBar.astro";
 import FeaturedMods from "../components/FeaturedMods.astro";
 import Highlights from "../components/Highlights.astro";
@@ -19,37 +18,31 @@ const hubLinks = [
   {
     title: "All Mods",
     description: "Browse the full collection of mods",
-    href: `${import.meta.env.BASE_URL}/mods/`,
+    href: `${import.meta.env.BASE_URL}mods/`,
     icon: "📦",
   },
   {
     title: "Documentation",
     description: "In-depth guides and reference for all mod features",
-    href: `${import.meta.env.BASE_URL}/docs/`,
+    href: `${import.meta.env.BASE_URL}docs/`,
     icon: "📚",
   },
   {
     title: "All Features",
     description: "Explore every feature with search and filtering",
-    href: `${import.meta.env.BASE_URL}/features/`,
+    href: `${import.meta.env.BASE_URL}features/`,
     icon: "✨",
   },
   {
     title: "FAQ",
     description: "Common questions and troubleshooting tips",
-    href: `${import.meta.env.BASE_URL}/faq/`,
+    href: `${import.meta.env.BASE_URL}faq/`,
     icon: "❓",
-  },
-  {
-    title: "Changelog",
-    description: "See what's new in each version",
-    href: `${import.meta.env.BASE_URL}/changelog/`,
-    icon: "📋",
   },
   {
     title: "Support",
     description: "Ways to support the project and get help",
-    href: `${import.meta.env.BASE_URL}/support/`,
+    href: `${import.meta.env.BASE_URL}support/`,
     icon: "💙",
   },
 ];
@@ -65,7 +58,7 @@ const externalLinks = [
   {
     title: "GitHub Repository",
     description: "Source code, issues, and contributions",
-    href: "https://github.com/TajemnikTV/TajsMod",
+    href: "https://github.com/TajsMods/",
     icon: "💻",
     external: true,
   },
@@ -82,9 +75,6 @@ const externalLinks = [
 <BaseLayout title="Home">
   <!-- Hero -->
   <Hero />
-
-  <!-- What's New Banner -->
-  <WhatsNewBanner />
 
   <!-- Trust Bar -->
   <TrustBar />
@@ -163,7 +153,7 @@ const externalLinks = [
 
         <div class="text-center mt-8">
           <a
-            href={`${import.meta.env.BASE_URL}/faq/`}
+            href={`${import.meta.env.BASE_URL}faq/`}
             class="btn-secondary inline-flex items-center gap-2"
           >
             View All FAQ

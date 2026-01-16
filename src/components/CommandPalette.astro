@@ -18,7 +18,6 @@ const categoryLabels = {
   feature: "Features",
   faq: "FAQ",
   action: "Quick Actions",
-  changelog: "Changelog",
 };
 ---
 
@@ -130,13 +129,12 @@ const categoryLabels = {
       feature: "Features",
       faq: "FAQ",
       action: "Quick Actions",
-      changelog: "Changelog",
     };
 
     function open() {
-      backdrop.classList.remove("opacity-0", "pointer-events-none");
-      palette.classList.remove("hidden");
-      palette.classList.add("flex");
+      backdrop!.classList.remove("opacity-0", "pointer-events-none");
+      palette!.classList.remove("hidden");
+      palette!.classList.add("flex");
       searchInput.focus();
       searchInput.value = "";
       renderResults(searchIndex.slice(0, 10));
@@ -144,9 +142,9 @@ const categoryLabels = {
     }
 
     function close() {
-      backdrop.classList.add("opacity-0", "pointer-events-none");
-      palette.classList.add("hidden");
-      palette.classList.remove("flex");
+      backdrop!.classList.add("opacity-0", "pointer-events-none");
+      palette!.classList.add("hidden");
+      palette!.classList.remove("flex");
       document.body.style.overflow = "";
     }
 
@@ -155,7 +153,7 @@ const categoryLabels = {
       selectedIndex = 0;
 
       if (items.length === 0) {
-        resultsContainer.innerHTML = `
+        resultsContainer!.innerHTML = `
           <div class="p-8 text-center text-gray-400">
             No results found
           </div>
@@ -201,11 +199,11 @@ const categoryLabels = {
         html += "</div>";
       }
 
-      resultsContainer.innerHTML = html;
+      resultsContainer!.innerHTML = html;
     }
 
     function updateSelection() {
-      const items = resultsContainer.querySelectorAll(".palette-item");
+      const items = resultsContainer!.querySelectorAll(".palette-item");
       items.forEach((item, i) => {
         if (i === selectedIndex) {
           item.classList.add(
@@ -227,7 +225,7 @@ const categoryLabels = {
     }
 
     function selectCurrent() {
-      const items = resultsContainer.querySelectorAll(".palette-item");
+      const items = resultsContainer!.querySelectorAll(".palette-item");
       const selected = items[selectedIndex] as HTMLAnchorElement;
       if (selected) {
         close();

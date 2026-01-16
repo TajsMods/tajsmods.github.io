@@ -15,7 +15,7 @@ interface Props {
 const {
   title,
   description = "Your hub for Upload Labs mods. Quality-of-life enhancements, visual tweaks, and powerful tools.",
-  image = `${import.meta.env.BASE_URL}/brand/TajsModHeader.png`,
+  image = `${import.meta.env.BASE_URL}brand/Header_-_3840x.png`,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -30,7 +30,7 @@ const socialImageURL = new URL(image, Astro.site);
     <link
       rel="icon"
       type="image/svg+xml"
-      href={`${import.meta.env.BASE_URL}/favicon.svg`}
+      href={`${import.meta.env.BASE_URL}favicon.svg`}
     />
     <meta name="generator" content={Astro.generator} />
 
@@ -38,12 +38,6 @@ const socialImageURL = new URL(image, Astro.site);
     <title>{title} | Taj's Mods</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title="Taj's Mods Changelog"
-      href={`${import.meta.env.BASE_URL}/feed.xml`}
-    />
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website" />

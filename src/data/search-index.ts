@@ -1,16 +1,15 @@
 /**
  * Build-time search index for the Command Palette and global search.
- * Aggregates all searchable content from pages, features, FAQ, and changelog.
+ * Aggregates all searchable content from pages, features, and FAQ.
  */
 import { features, categories } from './features';
 import { faq, faqCategories } from './faq';
-import { parseChangelog } from './parse-changelog';
 
 export interface SearchItem {
   id: string;
   title: string;
   description: string;
-  category: 'page' | 'feature' | 'faq' | 'action' | 'changelog';
+  category: 'page' | 'feature' | 'faq' | 'action';
   href: string;
   icon?: string;
   tags?: string[];
@@ -21,7 +20,6 @@ const pages: SearchItem[] = [
   { id: 'page-home', title: 'Home', description: 'Homepage with overview and quick links', category: 'page', href: '/', icon: '🏠' },
   { id: 'page-features', title: 'Features', description: 'Browse all mod features', category: 'page', href: '/features/', icon: '✨' },
   { id: 'page-faq', title: 'FAQ', description: 'Frequently asked questions', category: 'page', href: '/faq/', icon: '❓' },
-  { id: 'page-changelog', title: 'Changelog', description: 'Version history and release notes', category: 'page', href: '/changelog/', icon: '📋' },
   { id: 'page-roadmap', title: 'Roadmap', description: 'Planned features and improvements', category: 'page', href: '/roadmap/', icon: '🗺️' },
   { id: 'page-support', title: 'Support', description: 'Get help and support the project', category: 'page', href: '/support/', icon: '💙' },
   { id: 'page-docs', title: 'Documentation', description: 'Technical documentation and guides', category: 'page', href: '/docs/', icon: '📚' },
@@ -66,20 +64,6 @@ export function generateSearchIndex(): SearchItem[] {
       category: 'faq',
       href: `/faq/#${item.id}`,
       icon: '❓',
-    });
-  }
-  
-  // Add changelog versions
-  const { entries } = parseChangelog();
-  for (const entry of entries.slice(0, 5)) { // Only last 5 versions
-    const summary = entry.added?.[0] || entry.changed?.[0] || entry.fixed?.[0] || 'Release';
-    items.push({
-      id: `changelog-${entry.version}`,
-      title: `v${entry.version}`,
-      description: summary,
-      category: 'changelog',
-      href: `/changelog/#v${entry.version}`,
-      icon: '📋',
     });
   }
   

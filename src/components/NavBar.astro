@@ -2,13 +2,12 @@
 import ThemeToggle from "./ThemeToggle.astro";
 
 const navItems = [
-  { name: "Home", href: `${import.meta.env.BASE_URL}/` },
-  { name: "Mods", href: `${import.meta.env.BASE_URL}/mods/` },
-  { name: "Features", href: `${import.meta.env.BASE_URL}/features/` },
-  { name: "Docs", href: `${import.meta.env.BASE_URL}/docs/` },
-  { name: "FAQ", href: `${import.meta.env.BASE_URL}/faq/` },
-  { name: "Changelog", href: `${import.meta.env.BASE_URL}/changelog/` },
-  { name: "Support", href: `${import.meta.env.BASE_URL}/support/` },
+  { name: "Home", href: `${import.meta.env.BASE_URL}` },
+  { name: "Mods", href: `${import.meta.env.BASE_URL}mods/` },
+  { name: "Features", href: `${import.meta.env.BASE_URL}features/` },
+  { name: "Docs", href: `${import.meta.env.BASE_URL}docs/` },
+  { name: "FAQ", href: `${import.meta.env.BASE_URL}faq/` },
+  { name: "Support", href: `${import.meta.env.BASE_URL}support/` },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -19,11 +18,11 @@ const currentPath = Astro.url.pathname;
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
       <a
-        href={`${import.meta.env.BASE_URL}/`}
+        href={`${import.meta.env.BASE_URL}`}
         class="flex items-center gap-3 group"
       >
         <img
-          src={`${import.meta.env.BASE_URL}/brand/TajsModLogo.png`}
+          src={`${import.meta.env.BASE_URL}brand/Taj's Mods - 2048x2048.png`}
           alt="Taj's Mods Logo"
           class="h-10 w-10 rounded-lg shadow-sm group-hover:shadow-md transition-shadow"
         />

@@ -1,6 +1,6 @@
 /**
  * GitHub API integration
- * Used only for Roadmap (GitHub Issues) - Changelog uses CHANGELOG.md directly
+ * Used only for Roadmap (GitHub Issues)
  */
 import { roadmap as localRoadmap, type RoadmapItem } from './roadmap';
 

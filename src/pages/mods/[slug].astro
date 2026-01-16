@@ -5,11 +5,16 @@
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ModCard from "../../components/ModCard.astro";
-import { mods, getModBySlug, getRelatedMods, statusConfig } from "../../data/mods";
+import {
+  mods,
+  getModBySlug,
+  getRelatedMods,
+  statusConfig,
+} from "../../data/mods";
 
 // Generate static paths for all mods
 export function getStaticPaths() {
-  return mods.map(mod => ({
+  return mods.map((mod) => ({
     params: { slug: mod.slug },
     props: { mod },
   }));
@@ -20,39 +25,55 @@ const status = statusConfig[mod.status];
 const relatedMods = getRelatedMods(mod);
 
 // Get links by type
-const steamLink = mod.links.find(l => l.type === 'steam');
-const githubLink = mod.links.find(l => l.type === 'github');
-const docsLink = mod.links.find(l => l.type === 'docs');
-const issuesLink = mod.links.find(l => l.type === 'issues');
-const discordLink = mod.links.find(l => l.type === 'discord');
+const steamLink = mod.links.find((l) => l.type === "steam");
+const githubLink = mod.links.find((l) => l.type === "github");
+const docsLink = mod.links.find((l) => l.type === "docs");
+const issuesLink = mod.links.find((l) => l.type === "issues");
+const discordLink = mod.links.find((l) => l.type === "discord");
 ---
 
-<BaseLayout 
-  title={mod.name} 
+<BaseLayout
+  title={mod.name}
   description={mod.shortDescription}
-  image={mod.heroImage ? `${import.meta.env.BASE_URL}${mod.heroImage}` : undefined}
+  image={mod.heroImage
+    ? `${import.meta.env.BASE_URL}${mod.heroImage}`
+    : undefined}
 >
   <!-- Hero Section with Background -->
-  <section class="relative bg-gradient-to-b from-dark-900 to-dark-950 text-white py-16 md:py-24 overflow-hidden">
-    {mod.heroImage && (
-      <div class="absolute inset-0 z-0">
-        <img 
-          src={`${import.meta.env.BASE_URL}${mod.heroImage}`}
-          alt=""
-          class="w-full h-full object-cover opacity-20"
-          loading="eager"
-        />
-        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/80 to-dark-950"></div>
-      </div>
-    )}
-    
+  <section
+    class="relative bg-gradient-to-b from-dark-900 to-dark-950 text-white py-16 md:py-24 overflow-hidden"
+  >
+    {
+      mod.heroImage && (
+        <div class="absolute inset-0 z-0">
+          <img
+            src={`${import.meta.env.BASE_URL}${mod.heroImage}`}
+            alt=""
+            class="w-full h-full object-cover opacity-20"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-gradient-to-b from-dark-900/80 to-dark-950" />
+        </div>
+      )
+    }
+
     <div class="container-wide relative z-10">
       <!-- Breadcrumbs -->
       <nav class="mb-8">
         <ol class="flex items-center gap-2 text-sm text-gray-400">
-          <li><a href={`${import.meta.env.BASE_URL}/`} class="hover:text-white transition-colors">Home</a></li>
+          <li>
+            <a
+              href={`${import.meta.env.BASE_URL}`}
+              class="hover:text-white transition-colors">Home</a
+            >
+          </li>
           <li><span>/</span></li>
-          <li><a href={`${import.meta.env.BASE_URL}/mods/`} class="hover:text-white transition-colors">Mods</a></li>
+          <li>
+            <a
+              href={`${import.meta.env.BASE_URL}mods/`}
+              class="hover:text-white transition-colors">Mods</a
+            >
+          </li>
           <li><span>/</span></li>
           <li class="text-white">{mod.name}</li>
         </ol>
@@ -60,27 +81,33 @@ const discordLink = mod.links.find(l => l.type === 'discord');
 
       <div class="flex flex-col md:flex-row items-start gap-8">
         <!-- Logo -->
-        {mod.logo && (
-          <img 
-            src={`${import.meta.env.BASE_URL}${mod.logo}`}
-            alt={`${mod.name} logo`}
-            class="w-24 h-24 md:w-32 md:h-32 rounded-2xl shadow-2xl flex-shrink-0"
-            loading="eager"
-          />
-        )}
+        {
+          mod.logo && (
+            <img
+              src={`${import.meta.env.BASE_URL}${mod.logo}`}
+              alt={`${mod.name} logo`}
+              class="w-24 h-24 md:w-32 md:h-32 rounded-2xl shadow-2xl flex-shrink-0"
+              loading="eager"
+            />
+          )
+        }
 
         <!-- Info -->
         <div class="flex-1">
           <div class="flex items-center gap-3 flex-wrap mb-4">
             <h1 class="text-4xl md:text-5xl font-bold">{mod.name}</h1>
-            <span class={`px-3 py-1 text-sm font-medium rounded-full ${status.bgClass}`}>
+            <span
+              class={`px-3 py-1 text-sm font-medium rounded-full ${status.bgClass}`}
+            >
               {status.label}
             </span>
-            {mod.version && (
-              <span class="px-3 py-1 text-sm bg-white/10 rounded-full">
-                v{mod.version}
-              </span>
-            )}
+            {
+              mod.version && (
+                <span class="px-3 py-1 text-sm bg-white/10 rounded-full">
+                  v{mod.version}
+                </span>
+              )
+            }
           </div>
 
           <p class="text-xl text-gray-300 mb-6 max-w-3xl">
@@ -89,65 +116,95 @@ const discordLink = mod.links.find(l => l.type === 'discord');
 
           <!-- Tags -->
           <div class="flex flex-wrap gap-2 mb-8">
-            {mod.tags.map(tag => (
-              <span class="px-3 py-1 bg-white/10 text-sm rounded-full">
-                {tag}
-              </span>
-            ))}
+            {
+              mod.tags.map((tag) => (
+                <span class="px-3 py-1 bg-white/10 text-sm rounded-full">
+                  {tag}
+                </span>
+              ))
+            }
           </div>
 
           <!-- CTAs -->
           <div class="flex flex-wrap gap-3">
-            {steamLink && (
-              <a 
-                href={steamLink.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-primary"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.84 17.91c-.21.35-.66.46-1.01.26l-2.8-1.69-2.7 2.48c-.06.05-.14.09-.22.09-.18 0-.32-.14-.32-.32V15.5l4.84-4.35-5.98 3.81-2.74-1.65c-.43-.26-.45-.82-.04-1.11l11.05-6.5c.35-.21.8-.1 1.01.26.07.11.1.24.1.37l-1.19 11.58z"/>
-                </svg>
-                Subscribe on Steam
-              </a>
-            )}
-            {githubLink && (
-              <a 
-                href={githubLink.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
-                </svg>
-                View on GitHub
-              </a>
-            )}
-            {docsLink && (
-              <a 
-                href={`${import.meta.env.BASE_URL}${docsLink.url}`}
-                class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                </svg>
-                Documentation
-              </a>
-            )}
-            {issuesLink && (
-              <a 
-                href={issuesLink.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Report Issue
-              </a>
-            )}
+            {
+              steamLink && (
+                <a
+                  href={steamLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-primary"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.84 17.91c-.21.35-.66.46-1.01.26l-2.8-1.69-2.7 2.48c-.06.05-.14.09-.22.09-.18 0-.32-.14-.32-.32V15.5l4.84-4.35-5.98 3.81-2.74-1.65c-.43-.26-.45-.82-.04-1.11l11.05-6.5c.35-.21.8-.1 1.01.26.07.11.1.24.1.37l-1.19 11.58z" />
+                  </svg>
+                  Subscribe on Steam
+                </a>
+              )
+            }
+            {
+              githubLink && (
+                <a
+                  href={githubLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  View on GitHub
+                </a>
+              )
+            }
+            {
+              docsLink && (
+                <a
+                  href={`${import.meta.env.BASE_URL}${docsLink.url}`}
+                  class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                    />
+                  </svg>
+                  Documentation
+                </a>
+              )
+            }
+            {
+              issuesLink && (
+                <a
+                  href={issuesLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  Report Issue
+                </a>
+              )
+            }
           </div>
         </div>
       </div>
@@ -161,83 +218,107 @@ const discordLink = mod.links.find(l => l.type === 'discord');
         <!-- Main Column -->
         <div class="lg:col-span-2 space-y-8">
           <!-- Description -->
-          {mod.longDescription && (
-            <div class="card p-6 md:p-8">
-              <h2 class="text-2xl font-bold mb-4">About</h2>
-              <div class="prose prose-gray dark:prose-invert max-w-none">
-                {mod.longDescription.split('\n\n').map(paragraph => (
-                  <p class="text-gray-600 dark:text-gray-300 mb-4">{paragraph}</p>
-                ))}
+          {
+            mod.longDescription && (
+              <div class="card p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">About</h2>
+                <div class="prose prose-gray dark:prose-invert max-w-none">
+                  {mod.longDescription.split("\n\n").map((paragraph) => (
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )
+          }
 
           <!-- Features -->
-          {mod.features && mod.features.length > 0 && (
-            <div class="card p-6 md:p-8">
-              <h2 class="text-2xl font-bold mb-4">Key Features</h2>
-              <ul class="space-y-3">
-                {mod.features.map(feature => (
-                  <li class="flex items-start gap-3">
-                    <svg class="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-600 dark:text-gray-300">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {
+            mod.features && mod.features.length > 0 && (
+              <div class="card p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">Key Features</h2>
+                <ul class="space-y-3">
+                  {mod.features.map((feature) => (
+                    <li class="flex items-start gap-3">
+                      <svg
+                        class="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      <span class="text-gray-600 dark:text-gray-300">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
 
           <!-- Installation -->
-          {mod.installInstructions && (
-            <div class="card p-6 md:p-8">
-              <h2 class="text-2xl font-bold mb-4">Installation</h2>
-              <p class="text-gray-600 dark:text-gray-300 mb-4">
-                {mod.installInstructions}
-              </p>
-              {steamLink && (
-                <a 
-                  href={steamLink.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-primary"
-                >
-                  Subscribe on Steam Workshop
-                </a>
-              )}
-            </div>
-          )}
+          {
+            mod.installInstructions && (
+              <div class="card p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">Installation</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                  {mod.installInstructions}
+                </p>
+                {steamLink && (
+                  <a
+                    href={steamLink.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-primary"
+                  >
+                    Subscribe on Steam Workshop
+                  </a>
+                )}
+              </div>
+            )
+          }
 
           <!-- Compatibility -->
-          {mod.compatibility && mod.compatibility.length > 0 && (
-            <div class="card p-6 md:p-8">
-              <h2 class="text-2xl font-bold mb-4">Compatibility</h2>
-              <ul class="space-y-2">
-                {mod.compatibility.map(item => (
-                  <li class="flex items-start gap-2 text-gray-600 dark:text-gray-300">
-                    <span class="text-green-500">✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {
+            mod.compatibility && mod.compatibility.length > 0 && (
+              <div class="card p-6 md:p-8">
+                <h2 class="text-2xl font-bold mb-4">Compatibility</h2>
+                <ul class="space-y-2">
+                  {mod.compatibility.map((item) => (
+                    <li class="flex items-start gap-2 text-gray-600 dark:text-gray-300">
+                      <span class="text-green-500">✓</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
 
           <!-- Known Issues -->
-          {mod.knownIssues && mod.knownIssues.length > 0 && (
-            <div class="card p-6 md:p-8 border-yellow-500/30">
-              <h2 class="text-2xl font-bold mb-4">Known Issues</h2>
-              <ul class="space-y-2">
-                {mod.knownIssues.map(issue => (
-                  <li class="flex items-start gap-2 text-gray-600 dark:text-gray-300">
-                    <span class="text-yellow-500">⚠</span>
-                    {issue}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {
+            mod.knownIssues && mod.knownIssues.length > 0 && (
+              <div class="card p-6 md:p-8 border-yellow-500/30">
+                <h2 class="text-2xl font-bold mb-4">Known Issues</h2>
+                <ul class="space-y-2">
+                  {mod.knownIssues.map((issue) => (
+                    <li class="flex items-start gap-2 text-gray-600 dark:text-gray-300">
+                      <span class="text-yellow-500">⚠</span>
+                      {issue}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
         </div>
 
         <!-- Sidebar -->
@@ -248,26 +329,36 @@ const discordLink = mod.links.find(l => l.type === 'discord');
             <dl class="space-y-3 text-sm">
               <div class="flex justify-between">
                 <dt class="text-gray-500 dark:text-gray-400">Status</dt>
-                <dd class={`font-medium ${status.bgClass} px-2 py-0.5 rounded`}>{status.label}</dd>
+                <dd class={`font-medium ${status.bgClass} px-2 py-0.5 rounded`}>
+                  {status.label}
+                </dd>
               </div>
-              {mod.version && (
-                <div class="flex justify-between">
-                  <dt class="text-gray-500 dark:text-gray-400">Version</dt>
-                  <dd class="font-medium">v{mod.version}</dd>
-                </div>
-              )}
-              {mod.updatedAt && (
-                <div class="flex justify-between">
-                  <dt class="text-gray-500 dark:text-gray-400">Updated</dt>
-                  <dd class="font-medium">{new Date(mod.updatedAt).toLocaleDateString()}</dd>
-                </div>
-              )}
-              {mod.game && (
-                <div class="flex justify-between">
-                  <dt class="text-gray-500 dark:text-gray-400">Game</dt>
-                  <dd class="font-medium">{mod.game}</dd>
-                </div>
-              )}
+              {
+                mod.version && (
+                  <div class="flex justify-between">
+                    <dt class="text-gray-500 dark:text-gray-400">Version</dt>
+                    <dd class="font-medium">v{mod.version}</dd>
+                  </div>
+                )
+              }
+              {
+                mod.updatedAt && (
+                  <div class="flex justify-between">
+                    <dt class="text-gray-500 dark:text-gray-400">Updated</dt>
+                    <dd class="font-medium">
+                      {new Date(mod.updatedAt).toLocaleDateString()}
+                    </dd>
+                  </div>
+                )
+              }
+              {
+                mod.game && (
+                  <div class="flex justify-between">
+                    <dt class="text-gray-500 dark:text-gray-400">Game</dt>
+                    <dd class="font-medium">{mod.game}</dd>
+                  </div>
+                )
+              }
             </dl>
           </div>
 
@@ -275,30 +366,48 @@ const discordLink = mod.links.find(l => l.type === 'discord');
           <div class="card p-6">
             <h3 class="font-bold mb-4">Links</h3>
             <ul class="space-y-2">
-              {mod.links.map(link => (
-                <li>
-                  <a 
-                    href={link.type === 'docs' ? `${import.meta.env.BASE_URL}${link.url}` : link.url}
-                    target={link.type === 'docs' ? undefined : '_blank'}
-                    rel={link.type === 'docs' ? undefined : 'noopener noreferrer'}
-                    class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors"
-                  >
-                    {link.type === 'steam' && <span>🎮</span>}
-                    {link.type === 'github' && <span>💻</span>}
-                    {link.type === 'docs' && <span>📚</span>}
-                    {link.type === 'issues' && <span>🐛</span>}
-                    {link.type === 'discord' && <span>💬</span>}
-                    {link.type === 'modio' && <span>📦</span>}
-                    {link.type === 'website' && <span>🌐</span>}
-                    <span>{link.label || link.type}</span>
-                    {link.type !== 'docs' && (
-                      <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                      </svg>
-                    )}
-                  </a>
-                </li>
-              ))}
+              {
+                mod.links.map((link) => (
+                  <li>
+                    <a
+                      href={
+                        link.type === "docs"
+                          ? `${import.meta.env.BASE_URL}${link.url}`
+                          : link.url
+                      }
+                      target={link.type === "docs" ? undefined : "_blank"}
+                      rel={
+                        link.type === "docs" ? undefined : "noopener noreferrer"
+                      }
+                      class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors"
+                    >
+                      {link.type === "steam" && <span>🎮</span>}
+                      {link.type === "github" && <span>💻</span>}
+                      {link.type === "docs" && <span>📚</span>}
+                      {link.type === "issues" && <span>🐛</span>}
+                      {link.type === "discord" && <span>💬</span>}
+                      {link.type === "modio" && <span>📦</span>}
+                      {link.type === "website" && <span>🌐</span>}
+                      <span>{link.label || link.type}</span>
+                      {link.type !== "docs" && (
+                        <svg
+                          class="w-4 h-4 opacity-50"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                      )}
+                    </a>
+                  </li>
+                ))
+              }
             </ul>
           </div>
 
@@ -306,14 +415,16 @@ const discordLink = mod.links.find(l => l.type === 'discord');
           <div class="card p-6">
             <h3 class="font-bold mb-4">Tags</h3>
             <div class="flex flex-wrap gap-2">
-              {mod.tags.map(tag => (
-                <a 
-                  href={`${import.meta.env.BASE_URL}/mods/?filter=${tag}`}
-                  class="chip"
-                >
-                  {tag}
-                </a>
-              ))}
+              {
+                mod.tags.map((tag) => (
+                  <a
+                    href={`${import.meta.env.BASE_URL}mods/?filter=${tag}`}
+                    class="chip"
+                  >
+                    {tag}
+                  </a>
+                ))
+              }
             </div>
           </div>
         </div>
@@ -322,41 +433,49 @@ const discordLink = mod.links.find(l => l.type === 'discord');
   </section>
 
   <!-- Screenshots Gallery -->
-  {mod.screenshots && mod.screenshots.length > 0 && (
-    <section class="section bg-white dark:bg-dark-900">
-      <div class="container-wide">
-        <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Screenshots</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {mod.screenshots.map((screenshot, index) => (
-            <a 
-              href={`${import.meta.env.BASE_URL}${screenshot}`}
-              target="_blank"
-              class="block rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <img 
-                src={`${import.meta.env.BASE_URL}${screenshot}`}
-                alt={`${mod.name} screenshot ${index + 1}`}
-                class="w-full h-auto"
-                loading="lazy"
-              />
-            </a>
-          ))}
+  {
+    mod.screenshots && mod.screenshots.length > 0 && (
+      <section class="section bg-white dark:bg-dark-900">
+        <div class="container-wide">
+          <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">
+            Screenshots
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {mod.screenshots.map((screenshot, index) => (
+              <a
+                href={`${import.meta.env.BASE_URL}${screenshot}`}
+                target="_blank"
+                class="block rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <img
+                  src={`${import.meta.env.BASE_URL}${screenshot}`}
+                  alt={`${mod.name} screenshot ${index + 1}`}
+                  class="w-full h-auto"
+                  loading="lazy"
+                />
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
-  )}
+      </section>
+    )
+  }
 
   <!-- Related Mods -->
-  {relatedMods.length > 0 && (
-    <section class="section bg-gray-50 dark:bg-dark-950">
-      <div class="container-wide">
-        <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Related Mods</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {relatedMods.map(relatedMod => (
-            <ModCard mod={relatedMod} />
-          ))}
+  {
+    relatedMods.length > 0 && (
+      <section class="section bg-gray-50 dark:bg-dark-950">
+        <div class="container-wide">
+          <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">
+            Related Mods
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {relatedMods.map((relatedMod) => (
+              <ModCard mod={relatedMod} />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
-  )}
+      </section>
+    )
+  }
 </BaseLayout>
