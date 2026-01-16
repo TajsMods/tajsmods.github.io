@@ -66,14 +66,6 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
-      - name: Lychee (check built site)
-        uses: lycheeverse/lychee-action@v2.7.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # ważne dla linków typu "/..." w wygenerowanych HTML
-          args: --root-dir "${{ github.workspace }}/dist" --verbose --no-progress "dist/**/*.html"
-          fail: true
-          jobSummary: true
       - name: Build with Astro
         run: |
           ${{ steps.detect-package-manager.outputs.runner }} astro build \
@@ -84,6 +76,14 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ env.BUILD_PATH }}/dist
+      - name: Lychee (check built site)
+        uses: lycheeverse/lychee-action@v2.7.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # ważne dla linków typu "/..." w wygenerowanych HTML
+          args: --root-dir "${{ github.workspace }}/dist" --verbose --no-progress "dist/**/*.html"
+          fail: true
+          jobSummary: true          
 
   deploy:
     environment:
