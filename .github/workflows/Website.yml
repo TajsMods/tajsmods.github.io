@@ -76,6 +76,14 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ env.BUILD_PATH }}/dist
+      - name: Lychee (check built site)
+        uses: lycheeverse/lychee-action@v2.7.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # ważne dla linków typu "/..." w wygenerowanych HTML
+          args: --root-dir "${{ github.workspace }}/dist" --verbose --no-progress "dist/**/*.html"
+          fail: false
+          jobSummary: true          
 
   deploy:
     environment:
