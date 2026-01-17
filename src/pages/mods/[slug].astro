@@ -2,9 +2,9 @@
 /**
  * Mod Detail Page - /mods/[slug]
  * Displays detailed information about a specific mod
+ * Design inspired by cyber-tech aesthetic
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ModCard from "../../components/ModCard.astro";
 import {
   mods,
   getModBySlug,
@@ -30,6 +30,30 @@ const githubLink = mod.links.find((l) => l.type === "github");
 const docsLink = mod.links.find((l) => l.type === "docs");
 const issuesLink = mod.links.find((l) => l.type === "issues");
 const discordLink = mod.links.find((l) => l.type === "discord");
+
+// Map tag colors for the detailed page
+const tagColorMap: Record<string, string> = {
+  QoL: "bg-blue-500/10 text-blue-300 border-blue-500/20",
+  UI: "bg-purple-500/10 text-purple-300 border-purple-500/20",
+  Utility: "bg-pink-500/10 text-pink-300 border-pink-500/20",
+  Gameplay: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20",
+  Debug: "bg-gray-500/10 text-gray-300 border-gray-500/20",
+  Tools: "bg-slate-500/10 text-slate-300 border-slate-500/20",
+  Graphics: "bg-pink-500/10 text-pink-300 border-pink-500/20",
+};
+
+const getTagClass = (tag: string) =>
+  tagColorMap[tag] || "bg-white/10 text-gray-300 border-white/10";
+
+// Icon colors for related mods
+const iconColors: Record<string, string> = {
+  QoL: "bg-green-600",
+  UI: "bg-purple-600",
+  Utility: "bg-indigo-600",
+  Gameplay: "bg-pink-600",
+  Debug: "bg-gray-600",
+  Tools: "bg-blue-600",
+};
 ---
 
 <BaseLayout
@@ -39,101 +63,103 @@ const discordLink = mod.links.find((l) => l.type === "discord");
     ? `${import.meta.env.BASE_URL}${mod.heroImage}`
     : undefined}
 >
-  <!-- Hero Section with Background -->
-  <section
-    class="relative bg-gradient-to-b from-dark-900 to-dark-950 text-white py-16 md:py-24 overflow-hidden"
-  >
-    {
-      mod.heroImage && (
-        <div class="absolute inset-0 z-0">
-          <img
-            src={`${import.meta.env.BASE_URL}${mod.heroImage}`}
-            alt=""
-            class="w-full h-full object-cover opacity-20"
-            loading="eager"
-          />
-          <div class="absolute inset-0 bg-gradient-to-b from-dark-900/80 to-dark-950" />
-        </div>
-      )
-    }
+  <div class="relative z-10 pt-32 pb-20 px-4 sm:px-6 max-w-7xl mx-auto">
+    <!-- Breadcrumbs -->
+    <div class="flex items-center gap-2 text-sm text-gray-400 mb-8 pl-1">
+      <a
+        href={`${import.meta.env.BASE_URL}`}
+        class="hover:text-white transition-colors">Home</a
+      >
+      <span class="material-icons text-xs">chevron_right</span>
+      <a
+        href={`${import.meta.env.BASE_URL}mods/`}
+        class="hover:text-white transition-colors">Mods</a
+      >
+      <span class="material-icons text-xs">chevron_right</span>
+      <span class="text-white font-medium">{mod.name}</span>
+    </div>
 
-    <div class="container-wide relative z-10">
-      <!-- Breadcrumbs -->
-      <nav class="mb-8">
-        <ol class="flex items-center gap-2 text-sm text-gray-400">
-          <li>
-            <a
-              href={`${import.meta.env.BASE_URL}`}
-              class="hover:text-white transition-colors">Home</a
-            >
-          </li>
-          <li><span>/</span></li>
-          <li>
-            <a
-              href={`${import.meta.env.BASE_URL}mods/`}
-              class="hover:text-white transition-colors">Mods</a
-            >
-          </li>
-          <li><span>/</span></li>
-          <li class="text-white">{mod.name}</li>
-        </ol>
-      </nav>
+    <!-- Header Card -->
+    <header
+      class="glass-card rounded-2xl p-8 mb-8 relative overflow-hidden group"
+    >
+      <!-- Glow effect -->
+      <div
+        class="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 rounded-full blur-[80px] group-hover:bg-primary/30 transition-all duration-700"
+      >
+      </div>
 
-      <div class="flex flex-col md:flex-row items-start gap-8">
+      <div class="flex flex-col md:flex-row gap-8 items-start relative z-10">
         <!-- Logo -->
-        {
-          mod.logo && (
-            <img
-              src={`${import.meta.env.BASE_URL}${mod.logo}`}
-              alt={`${mod.name} logo`}
-              class="w-24 h-24 md:w-32 md:h-32 rounded-2xl shadow-2xl flex-shrink-0"
-              loading="eager"
-            />
-          )
-        }
+        <div class="flex-shrink-0">
+          {
+            mod.logo ? (
+              <img
+                src={`${import.meta.env.BASE_URL}${mod.logo}`}
+                alt={`${mod.name} logo`}
+                class="w-32 h-32 rounded-2xl shadow-2xl border border-white/10"
+                loading="eager"
+              />
+            ) : (
+              <div class="w-32 h-32 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-2xl flex items-center justify-center border border-white/10">
+                <span class="text-4xl font-bold text-white drop-shadow-md">
+                  {mod.name
+                    .split(" ")
+                    .map((w: string) => w[0])
+                    .join("")
+                    .slice(0, 2)}
+                </span>
+              </div>
+            )
+          }
+        </div>
 
         <!-- Info -->
-        <div class="flex-1">
-          <div class="flex items-center gap-3 flex-wrap mb-4">
-            <h1 class="text-4xl md:text-5xl font-bold">{mod.name}</h1>
+        <div class="flex-grow">
+          <div class="flex items-center flex-wrap gap-4 mb-2">
+            <h1 class="text-4xl font-bold text-white tracking-tight">
+              {mod.name}
+            </h1>
             <span
-              class={`px-3 py-1 text-sm font-medium rounded-full ${status.bgClass}`}
+              class={`px-2.5 py-0.5 rounded-md text-xs font-semibold ${status.bgClass} border border-current/30`}
             >
               {status.label}
             </span>
             {
               mod.version && (
-                <span class="px-3 py-1 text-sm bg-white/10 rounded-full">
+                <span class="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-white/10 text-gray-300 border border-white/10">
                   v{mod.version}
                 </span>
               )
             }
           </div>
 
-          <p class="text-xl text-gray-300 mb-6 max-w-3xl">
+          <p class="text-lg text-gray-300 mb-6 max-w-3xl leading-relaxed">
             {mod.shortDescription}
           </p>
 
           <!-- Tags -->
-          <div class="flex flex-wrap gap-2 mb-8">
+          <div class="flex flex-wrap gap-2 mb-6">
             {
               mod.tags.map((tag) => (
-                <span class="px-3 py-1 bg-white/10 text-sm rounded-full">
+                <span
+                  class={`px-3 py-1 rounded-full text-xs font-medium border ${getTagClass(tag)}`}
+                >
                   {tag}
                 </span>
               ))
             }
           </div>
 
-          <!-- CTAs -->
-          <div class="flex flex-wrap gap-3">
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap gap-4">
             {
               steamLink && (
                 <a
                   href={steamLink.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn-primary"
+                  class="btn-glow flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white px-6 py-2.5 rounded-lg font-semibold transition-transform active:scale-95"
                 >
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.84 17.91c-.21.35-.66.46-1.01.26l-2.8-1.69-2.7 2.48c-.06.05-.14.09-.22.09-.18 0-.32-.14-.32-.32V15.5l4.84-4.35-5.98 3.81-2.74-1.65c-.43-.26-.45-.82-.04-1.11l11.05-6.5c.35-.21.8-.1 1.01.26.07.11.1.24.1.37l-1.19 11.58z" />
@@ -148,7 +174,7 @@ const discordLink = mod.links.find((l) => l.type === "discord");
                   href={githubLink.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
+                  class="btn-secondary"
                 >
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
@@ -161,21 +187,9 @@ const discordLink = mod.links.find((l) => l.type === "discord");
               docsLink && (
                 <a
                   href={`${import.meta.env.BASE_URL}${docsLink.url}`}
-                  class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
+                  class="btn-secondary"
                 >
-                  <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                    />
-                  </svg>
+                  <span class="material-icons text-lg">description</span>
                   Documentation
                 </a>
               )
@@ -186,21 +200,9 @@ const discordLink = mod.links.find((l) => l.type === "discord");
                   href={issuesLink.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn-secondary bg-white/10 hover:bg-white/20 text-white border-white/20"
+                  class="btn-secondary"
                 >
-                  <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                  <span class="material-icons text-lg">bug_report</span>
                   Report Issue
                 </a>
               )
@@ -208,274 +210,445 @@ const discordLink = mod.links.find((l) => l.type === "discord");
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- Main Content -->
-  <section class="section bg-gray-50 dark:bg-dark-950">
-    <div class="container-wide">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Main Column -->
-        <div class="lg:col-span-2 space-y-8">
-          <!-- Description -->
-          {
-            mod.longDescription && (
-              <div class="card p-6 md:p-8">
-                <h2 class="text-2xl font-bold mb-4">About</h2>
-                <div class="prose prose-gray dark:prose-invert max-w-none">
-                  {mod.longDescription.split("\n\n").map((paragraph) => (
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Main Column -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- About Section -->
+        {
+          mod.longDescription && (
+            <section class="glass-card rounded-2xl p-6">
+              <h2 class="text-2xl font-bold text-white mb-4 border-b border-white/10 pb-2">
+                About
+              </h2>
+              <div class="prose prose-invert max-w-none text-gray-300">
+                {mod.longDescription.split("\n\n").map((paragraph) => (
+                  <p class="mb-4">{paragraph}</p>
+                ))}
               </div>
-            )
-          }
+            </section>
+          )
+        }
 
-          <!-- Features -->
-          {
-            mod.features && mod.features.length > 0 && (
-              <div class="card p-6 md:p-8">
-                <h2 class="text-2xl font-bold mb-4">Key Features</h2>
-                <ul class="space-y-3">
-                  {mod.features.map((feature) => (
+        <!-- Key Features Section -->
+        {
+          mod.features && mod.features.length > 0 && (
+            <section class="glass-card rounded-2xl p-6">
+              <h2 class="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+                Key Features
+              </h2>
+              <ul class="space-y-3">
+                {mod.features.map((feature) => {
+                  const [name, description] = feature.includes(" - ")
+                    ? feature.split(" - ", 2)
+                    : [feature, null];
+                  return (
                     <li class="flex items-start gap-3">
-                      <svg
-                        class="w-5 h-5 text-accent-500 flex-shrink-0 mt-0.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      <span class="text-gray-600 dark:text-gray-300">
-                        {feature}
+                      <span class="material-icons text-primary text-xl mt-0.5">
+                        check_circle
                       </span>
+                      <div>
+                        <span class="font-semibold text-white">{name}</span>
+                        {description && (
+                          <span class="text-gray-400"> - {description}</span>
+                        )}
+                      </div>
                     </li>
-                  ))}
-                </ul>
-              </div>
-            )
-          }
+                  );
+                })}
+              </ul>
+            </section>
+          )
+        }
 
-          <!-- Installation -->
-          {
-            mod.installInstructions && (
-              <div class="card p-6 md:p-8">
-                <h2 class="text-2xl font-bold mb-4">Installation</h2>
-                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                  {mod.installInstructions}
-                </p>
-                {steamLink && (
-                  <a
-                    href={steamLink.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-primary"
-                  >
-                    Subscribe on Steam Workshop
-                  </a>
-                )}
-              </div>
-            )
-          }
+        <!-- Installation Section -->
+        {
+          mod.installInstructions && (
+            <section class="glass-card rounded-2xl p-6">
+              <h2 class="text-2xl font-bold text-white mb-4 border-b border-white/10 pb-2">
+                Installation
+              </h2>
+              <p class="text-gray-300 mb-6">{mod.installInstructions}</p>
+              {steamLink && (
+                <a
+                  href={steamLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-glow inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white px-8 py-3 rounded-lg font-bold transition-transform active:scale-95 shadow-lg"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.84 17.91c-.21.35-.66.46-1.01.26l-2.8-1.69-2.7 2.48c-.06.05-.14.09-.22.09-.18 0-.32-.14-.32-.32V15.5l4.84-4.35-5.98 3.81-2.74-1.65c-.43-.26-.45-.82-.04-1.11l11.05-6.5c.35-.21.8-.1 1.01.26.07.11.1.24.1.37l-1.19 11.58z" />
+                  </svg>
+                  Subscribe on Steam Workshop
+                </a>
+              )}
+            </section>
+          )
+        }
 
-          <!-- Compatibility -->
+        <!-- Compatibility & Known Issues Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {
             mod.compatibility && mod.compatibility.length > 0 && (
-              <div class="card p-6 md:p-8">
-                <h2 class="text-2xl font-bold mb-4">Compatibility</h2>
-                <ul class="space-y-2">
+              <section class="glass-card rounded-2xl p-6">
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/10 pb-2">
+                  Compatibility
+                </h2>
+                <ul class="space-y-3 text-sm">
                   {mod.compatibility.map((item) => (
-                    <li class="flex items-start gap-2 text-gray-600 dark:text-gray-300">
-                      <span class="text-green-500">✓</span>
-                      {item}
+                    <li class="flex items-start gap-2">
+                      <span class="material-icons text-green-400 text-lg">
+                        check
+                      </span>
+                      <span class="text-gray-300">{item}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </section>
             )
           }
 
-          <!-- Known Issues -->
           {
             mod.knownIssues && mod.knownIssues.length > 0 && (
-              <div class="card p-6 md:p-8 border-yellow-500/30">
-                <h2 class="text-2xl font-bold mb-4">Known Issues</h2>
-                <ul class="space-y-2">
+              <section class="glass-card rounded-2xl p-6">
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/10 pb-2">
+                  Known Issues
+                </h2>
+                <ul class="space-y-3 text-sm">
                   {mod.knownIssues.map((issue) => (
-                    <li class="flex items-start gap-2 text-gray-600 dark:text-gray-300">
-                      <span class="text-yellow-500">⚠</span>
-                      {issue}
+                    <li class="flex items-start gap-2">
+                      <span class="material-icons text-orange-400 text-lg">
+                        warning_amber
+                      </span>
+                      <span class="text-gray-300">{issue}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </section>
             )
           }
         </div>
+      </div>
 
-        <!-- Sidebar -->
-        <div class="space-y-6">
-          <!-- Quick Info -->
-          <div class="card p-6">
-            <h3 class="font-bold mb-4">Info</h3>
-            <dl class="space-y-3 text-sm">
-              <div class="flex justify-between">
-                <dt class="text-gray-500 dark:text-gray-400">Status</dt>
-                <dd class={`font-medium ${status.bgClass} px-2 py-0.5 rounded`}>
-                  {status.label}
-                </dd>
-              </div>
-              {
-                mod.version && (
-                  <div class="flex justify-between">
-                    <dt class="text-gray-500 dark:text-gray-400">Version</dt>
-                    <dd class="font-medium">v{mod.version}</dd>
-                  </div>
-                )
-              }
-              {
-                mod.updatedAt && (
-                  <div class="flex justify-between">
-                    <dt class="text-gray-500 dark:text-gray-400">Updated</dt>
-                    <dd class="font-medium">
-                      {new Date(mod.updatedAt).toLocaleDateString()}
-                    </dd>
-                  </div>
-                )
-              }
-              {
-                mod.game && (
-                  <div class="flex justify-between">
-                    <dt class="text-gray-500 dark:text-gray-400">Game</dt>
-                    <dd class="font-medium">{mod.game}</dd>
-                  </div>
-                )
-              }
-            </dl>
-          </div>
-
-          <!-- Links -->
-          <div class="card p-6">
-            <h3 class="font-bold mb-4">Links</h3>
-            <ul class="space-y-2">
-              {
-                mod.links.map((link) => (
-                  <li>
-                    <a
-                      href={
-                        link.type === "docs"
-                          ? `${import.meta.env.BASE_URL}${link.url}`
-                          : link.url
-                      }
-                      target={link.type === "docs" ? undefined : "_blank"}
-                      rel={
-                        link.type === "docs" ? undefined : "noopener noreferrer"
-                      }
-                      class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors"
-                    >
-                      {link.type === "steam" && <span>🎮</span>}
-                      {link.type === "github" && <span>💻</span>}
-                      {link.type === "docs" && <span>📚</span>}
-                      {link.type === "issues" && <span>🐛</span>}
-                      {link.type === "discord" && <span>💬</span>}
-                      {link.type === "modio" && <span>📦</span>}
-                      {link.type === "website" && <span>🌐</span>}
-                      <span>{link.label || link.type}</span>
-                      {link.type !== "docs" && (
-                        <svg
-                          class="w-4 h-4 opacity-50"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      )}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <!-- Tags -->
-          <div class="card p-6">
-            <h3 class="font-bold mb-4">Tags</h3>
-            <div class="flex flex-wrap gap-2">
-              {
-                mod.tags.map((tag) => (
-                  <a
-                    href={`${import.meta.env.BASE_URL}mods/?filter=${tag}`}
-                    class="chip"
-                  >
-                    {tag}
-                  </a>
-                ))
-              }
+      <!-- Sidebar -->
+      <div class="space-y-8">
+        <!-- Info Card -->
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-lg font-bold text-white mb-4">Info</h3>
+          <div class="space-y-4 text-sm">
+            <div
+              class="flex justify-between items-center pb-2 border-b border-white/5"
+            >
+              <span class="text-gray-400">Status</span>
+              <span
+                class={`font-medium ${status.color === "green" ? "text-green-400" : status.color === "yellow" ? "text-yellow-400" : "text-orange-400"}`}
+              >
+                {status.label}
+              </span>
             </div>
+            {
+              mod.version && (
+                <div class="flex justify-between items-center pb-2 border-b border-white/5">
+                  <span class="text-gray-400">Version</span>
+                  <span class="text-white font-medium">v{mod.version}</span>
+                </div>
+              )
+            }
+            {
+              mod.updatedAt && (
+                <div class="flex justify-between items-center pb-2 border-b border-white/5">
+                  <span class="text-gray-400">Updated</span>
+                  <span class="text-white font-medium">
+                    {new Date(mod.updatedAt)
+                      .toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })
+                      .replace(/\//g, ".")}
+                  </span>
+                </div>
+              )
+            }
+            {
+              mod.game && (
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">Game</span>
+                  <span class="text-white font-medium">{mod.game}</span>
+                </div>
+              )
+            }
+          </div>
+        </div>
+
+        <!-- Links Card -->
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-lg font-bold text-white mb-4">Links</h3>
+          <div class="space-y-3">
+            {
+              steamLink && (
+                <a
+                  href={steamLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-3 text-gray-300 hover:text-primary transition-colors"
+                >
+                  <span class="material-icons text-sm">open_in_new</span>
+                  <span>Steam Workshop</span>
+                </a>
+              )
+            }
+            {
+              githubLink && (
+                <a
+                  href={githubLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-3 text-gray-300 hover:text-primary transition-colors"
+                >
+                  <span class="material-icons text-sm">code</span>
+                  <span>GitHub</span>
+                </a>
+              )
+            }
+            {
+              docsLink && (
+                <a
+                  href={`${import.meta.env.BASE_URL}${docsLink.url}`}
+                  class="flex items-center gap-3 text-gray-300 hover:text-primary transition-colors"
+                >
+                  <span class="material-icons text-sm">library_books</span>
+                  <span>Documentation</span>
+                </a>
+              )
+            }
+            {
+              issuesLink && (
+                <a
+                  href={issuesLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-3 text-gray-300 hover:text-primary transition-colors"
+                >
+                  <span class="material-icons text-sm">bug_report</span>
+                  <span>Report Issues</span>
+                </a>
+              )
+            }
+            {
+              discordLink && (
+                <a
+                  href={discordLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-3 text-gray-300 hover:text-primary transition-colors"
+                >
+                  <span class="material-icons text-sm">chat</span>
+                  <span>Discord</span>
+                </a>
+              )
+            }
+          </div>
+        </div>
+
+        <!-- Tags Card -->
+        <div class="glass-card rounded-2xl p-6">
+          <h3 class="text-lg font-bold text-white mb-4">Tags</h3>
+          <div class="flex flex-wrap gap-2">
+            {
+              mod.tags.map((tag) => (
+                <a
+                  href={`${import.meta.env.BASE_URL}mods/?filter=${tag}`}
+                  class="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs text-gray-300 transition-colors cursor-pointer"
+                >
+                  {tag}
+                </a>
+              ))
+            }
           </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Screenshots Gallery -->
-  {
-    mod.screenshots && mod.screenshots.length > 0 && (
-      <section class="section bg-white dark:bg-dark-900">
-        <div class="container-wide">
-          <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">
-            Screenshots
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Screenshots Gallery -->
+    {
+      mod.screenshots && mod.screenshots.length > 0 && (
+        <section class="mt-16 mb-16">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold text-white">Screenshots</h2>
+            <div class="flex gap-2">
+              <button
+                id="screenshot-prev"
+                class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-colors text-white"
+              >
+                <span class="material-icons">arrow_back</span>
+              </button>
+              <button
+                id="screenshot-next"
+                class="w-10 h-10 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-colors text-white"
+              >
+                <span class="material-icons">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+          <div
+            id="screenshots-container"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
             {mod.screenshots.map((screenshot, index) => (
               <a
                 href={`${import.meta.env.BASE_URL}${screenshot}`}
                 target="_blank"
-                class="block rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                class="group relative aspect-video bg-black/40 rounded-xl overflow-hidden border border-white/10 hover:border-primary/50 transition-colors"
               >
                 <img
                   src={`${import.meta.env.BASE_URL}${screenshot}`}
                   alt={`${mod.name} screenshot ${index + 1}`}
-                  class="w-full h-auto"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                  <span class="text-white font-medium">
+                    Screenshot {index + 1}
+                  </span>
+                </div>
               </a>
             ))}
           </div>
-        </div>
-      </section>
-    )
-  }
+        </section>
+      )
+    }
 
-  <!-- Related Mods -->
-  {
-    relatedMods.length > 0 && (
-      <section class="section bg-gray-50 dark:bg-dark-950">
-        <div class="container-wide">
-          <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">
+    <!-- Related Mods -->
+    {
+      relatedMods.length > 0 && (
+        <section class="mt-16 pb-16">
+          <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-primary pl-4">
             Related Mods
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {relatedMods.map((relatedMod) => (
-              <ModCard mod={relatedMod} />
-            ))}
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {relatedMods.map((relatedMod) => {
+              const relatedStatus = statusConfig[relatedMod.status];
+              const primaryTag = relatedMod.tags[0] || "Utility";
+              const iconColor = iconColors[primaryTag] || "bg-indigo-600";
+
+              return (
+                <a
+                  href={`${import.meta.env.BASE_URL}mods/${relatedMod.slug}/`}
+                  class="glass-card p-4 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group"
+                >
+                  <div class="flex gap-4">
+                    {relatedMod.logo ? (
+                      <img
+                        src={`${import.meta.env.BASE_URL}${relatedMod.logo}`}
+                        alt={`${relatedMod.name} logo`}
+                        class="w-16 h-16 rounded-lg object-cover flex-shrink-0 group-hover:scale-105 transition-transform"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div
+                        class={`w-16 h-16 rounded-lg ${iconColor} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform`}
+                      >
+                        <span class="material-icons text-white">
+                          {primaryTag === "UI"
+                            ? "palette"
+                            : primaryTag === "QoL"
+                              ? "settings"
+                              : primaryTag === "Debug"
+                                ? "auto_fix_high"
+                                : primaryTag === "Tools"
+                                  ? "build"
+                                  : "terminal"}
+                        </span>
+                      </div>
+                    )}
+                    <div class="min-w-0">
+                      <h4 class="font-bold text-white group-hover:text-primary transition-colors truncate">
+                        {relatedMod.name}
+                        {relatedMod.status === "beta" && (
+                          <span class="text-[10px] bg-yellow-500/20 text-yellow-500 px-1 rounded ml-1">
+                            Beta
+                          </span>
+                        )}
+                      </h4>
+                      <p class="text-xs text-gray-400 mt-1 line-clamp-2">
+                        {relatedMod.shortDescription}
+                      </p>
+                      <div class="flex gap-2 mt-2">
+                        {relatedMod.tags.slice(0, 1).map((tag) => (
+                          <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded text-gray-300">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
           </div>
-        </div>
-      </section>
-    )
-  }
+        </section>
+      )
+    }
+  </div>
 </BaseLayout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Primary color for material icons */
+  .text-primary {
+    color: #ff7f36;
+  }
+
+  /* Hover primary color */
+  .hover\:text-primary:hover {
+    color: #ff7f36;
+  }
+
+  /* Screenshot scroll animation placeholder */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #screenshots-container > * {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  #screenshots-container > *:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+</style>
+
+<script>
+  // Simple screenshot gallery navigation (can be enhanced with actual carousel logic)
+  document.addEventListener("astro:page-load", () => {
+    const prevBtn = document.getElementById("screenshot-prev");
+    const nextBtn = document.getElementById("screenshot-next");
+    const container = document.getElementById("screenshots-container");
+
+    if (prevBtn && nextBtn && container) {
+      prevBtn.addEventListener("click", () => {
+        container.scrollBy({ left: -400, behavior: "smooth" });
+      });
+
+      nextBtn.addEventListener("click", () => {
+        container.scrollBy({ left: 400, behavior: "smooth" });
+      });
+    }
+  });
+</script>
